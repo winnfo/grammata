@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/'γra.ma.ta/</title>
+
+    <!-- Standard Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+
+    <!-- Apple Touch Icon (for iOS) -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Android/Chrome -->
+    <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fef1df;
+        }
+
+        .dropdown {
+            margin-top: 30px;
+            position: relative;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .dropdown button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: auto;
+            gap: 8px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* Hover effect for the dropdown button */
+        .dropdown button:hover {
+            background-color: #f0f0f0;
+            border-color: #888;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 98.5%;
+            /* Matches button width */
+            border: 1px solid #ccc;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 11px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+            /* Ensures items take full width */
+            box-sizing: border-box;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-item img {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+        }
+
+        .button img {
+            width: 20px;
+            height: 15px;
+            margin-right: 10px;
+        }
+
+        #displayImage {
+            display: none;
+            max-width: 100%;
+            height: auto;
+            margin-top: 0px;
+        }
+
+
+        #wineLogoImage {
+            width: 300px;
+            height: auto;
+            margin-top: 30px;
+            margin-bottom: 0px;
+        }
+
+        /* SVG Arrow Styling */
+        .dropdown svg {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown.active svg {
+            transform: rotate(180deg);
+        }
+
+        /* Media Query for large screens (over 10 inches) */
+        @media (min-width: 500px) {
+            #displayImage {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            #wineLogoImage {
+                max-width: 70%;
+            }
+        }
+    </style>
+    <script>
+        function handleSelection(value) {
+            var button = document.getElementById("dropdownButton");
+            var buttonImage = document.getElementById("dropdownButtonImage");
+            var image = document.getElementById("displayImage");
+            var dropdown = document.querySelector(".dropdown");
+
+            var flagImages = {
+                "gr": "https://flagcdn.com/w40/gr.png",
+                "en": "https://flagcdn.com/w40/gb.png",
+                "fr": "https://flagcdn.com/w40/fr.png",
+                "de": "https://flagcdn.com/w40/de.png"
+            };
+
+            var labelImages = {
+                "gr": "grammata_gr.png",
+                "en": "grammata_en.png",
+                "fr": "grammata_fr.png",
+                "de": "grammata_de.png"
+            };
+
+            var languageNames = {
+                "gr": "Ελληνικά",
+                "en": "English",
+                "fr": "Français",
+                "de": "Deutsch"
+            };
+
+            if (flagImages[value] && languageNames[value] && labelImages[value]) {
+                image.src = labelImages[value];
+                image.style.display = "block";
+                buttonImage.src = flagImages[value];
+                button.querySelector("span").textContent = languageNames[value];
+            }
+
+            // Close the dropdown after selection
+            dropdown.classList.remove("active");
+        }
+
+        // Toggle dropdown on button click
+        function toggleDropdown() {
+            var dropdown = document.querySelector(".dropdown");
+            dropdown.classList.toggle("active");
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener("click", function (event) {
+            var dropdown = document.querySelector(".dropdown");
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove("active");
+            }
+        });
+
+        // Set default language on page load
+        window.onload = function () {
+            handleSelection("en"); // Set default language to Greek
+        };
+    </script>
+</head>
+
+<body>
+    <div class="dropdown">
+        <button id="dropdownButton" onclick="toggleDropdown()">
+            <img id="dropdownButtonImage" src="https://flagcdn.com/w40/gr.png" height="16px" alt="language flag">
+            <span style="padding-top: 2px;">English</span>
+            <!-- SVG Arrow -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="black">
+                <path d="M7 10l5 5 5-5H7z" />
+            </svg>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" onclick="handleSelection('gr')">
+                <img src="https://flagcdn.com/w40/gr.png" alt="Greek">
+                <span>Ελληνικά</span>
+            </div>
+            <div class="dropdown-item" onclick="handleSelection('en')">
+                <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                <span>English</span>
+            </div>
+            <div class="dropdown-item" onclick="handleSelection('fr')">
+                <img src="https://flagcdn.com/w40/fr.png" alt="French">
+                <span>Français</span>
+            </div>
+            <div class="dropdown-item" onclick="handleSelection('de')">
+                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch">
+                <span>Deutsch</span>
+            </div>
+        </div>
+    </div>
+    <img id="wineLogoImage" src="grammata-label.png" alt="Grammata wine logo">
+    <img id="displayImage" src="grammata_en.png" alt="Selected Country Flag">
+</body>
+
+</html>
